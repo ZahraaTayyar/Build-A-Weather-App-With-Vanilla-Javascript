@@ -5,6 +5,8 @@ window.addEventListener('load', () => {
     let temperatureDescription = document.querySelector('.temperature-description');
     let temperatureDegree = document.querySelector('.temperature-degree');
     let locationTimezone = document.querySelector('.location-timezone');
+    let temperatureSection = document.querySelector(".temperature");
+    const temperatureSpan = document.querySelector('.temperature span')
 
     if(navigator.geolocation) {
 
@@ -25,12 +27,31 @@ window.addEventListener('load', () => {
                 .then((data) => {      
                     console.log(data);           
                     const { temp } = data.main;
+                    const { icon } = data.weather[0].icon;
                     // ^ object destructuring 
 
                     //set DOM elements from API:
                     document.querySelector(".temperature-degree").textContent = temp;
                     temperatureDescription.textContent = data.weather[0].description;
-                    locationTimezone.textContent = data.sys.country
+                    locationTimezone.textContent = data.sys.country;
+
+                    //formula for celsius
+                    let celsius = (temp - 32) * (5 / 9);
+
+                    //set icon
+                    // setIcons(icon, document.querySelector(".icon"));
+
+                    //change temperature to celsius
+                    temperatureSection.addEventListener("click", () => {
+                        if(temperatureSpan.textContent === "F") {
+                            temperatureSpan.textContent = "C";
+                            temperatureDegree.textContent = Math.floor(celsius);
+                        } else {
+                            temperatureSpan.textContent = "F";
+                            temperatureDegree.textContent = temp;
+                        }
+                    })
+
                 });
             
             // async function fetchApiData(url) {
@@ -60,8 +81,10 @@ window.addEventListener('load', () => {
         h1.textContent = "You need to turn on geolocation to use this function"
     }
 
-    function setIcons(icon, iconId) {
-        const skycons = new skycons({color: "white"});
-        const currentIcon = 
-    }
+    // function setIcons(icon, iconID) {
+    //     const skycons = new Skycons({color: "white"});
+    //     const currentIcon = icon.replace(/-/g, "_").toUpperCase();
+    //     skycons.play();
+    //     return skycons.set(iconID, skycons[currentIcon]);
+    // }
 });
