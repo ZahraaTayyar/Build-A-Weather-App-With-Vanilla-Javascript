@@ -9,8 +9,6 @@ window.addEventListener('load', () => {
     const temperatureSpan = document.querySelector('.temperature span')
 
     if(navigator.geolocation) {
-
-
         navigator.geolocation.getCurrentPosition(position => {
 
             long = position.coords.longitude;
